@@ -2,8 +2,12 @@ let cursor = document.querySelector("#pointer");
 let dot = document.querySelector("#dot");
 let ring = document.querySelector("#ring");
 addEventListener('mousemove', (e) => {
-    cursor.style.top = `${e.y}px`;
-    cursor.style.left = `${e.x}px`;
+    dot.style.top = `${e.y}px`;
+    dot.style.left = `${e.x}px`;
+    setTimeout(() => {
+        ring.style.top = `${e.y}px`;
+        ring.style.left = `${e.x}px`;
+    }, 200)
     if (e.target.tagName == "P") {
         cursor.style.transform = "scale(2)";
 
@@ -61,8 +65,8 @@ function init() {
     ctx.fillRect(0, 0, innerWidth, innerHeight)
     ctx.fillStyle = 'rgba(0,0,0,0.01)';
     ctx.fill();
-    window.addEventListener('mousemove', function(e) {
-        particles.push(new Circle(e.x, e.y, 20));
+    window.addEventListener('click', function(e) {
+        particles.push(new Circle(e.x, e.y, 70));
     })
 }
 

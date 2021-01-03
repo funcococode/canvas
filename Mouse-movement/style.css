@@ -61,7 +61,7 @@ button {
     border-radius: 50%;
     /* background-color: white; */
     border: 2px solid white;
-    animation: ringAnim 2s 0.5s infinite;
+    animation: ringAnim 3s 0.5s infinite;
     transform-origin: top left;
 }
 
