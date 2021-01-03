@@ -4,7 +4,7 @@ canvas.width = innerWidth;
 canvas.height = innerHeight;
 
 let ballsArray = [];
-let numberOfBalls = 500;
+let numberOfBalls = 200;
 let colors = [
     "#a1E8B8",
     "#F9E784",
