@@ -4,14 +4,14 @@ canvas.width = innerWidth;
 canvas.height = innerHeight;
 
 let ballsArray = [];
-let numberOfBalls = 35;
+let numberOfBalls = 100;
 
 let colors = [
-    "#F1E8B8",
+    "#a1E8B8",
     "#F9E784",
     "#E58F65",
     "#D05353",
-    "#191919"
+    "#23ffff"
 ]
 
 
@@ -27,7 +27,7 @@ class Ball {
         this.friction = 0.92
 
         this.rad = rad;
-        this.color = "red"
+        this.color = colors[Math.floor(Math.random()*colors.length)]
     }
 
     draw() {
@@ -80,7 +80,7 @@ function init() {
 
 function animate() {
     requestAnimationFrame(animate)
-    ctx.fillStyle = "rgba(222,222,222,0.1)"
+    ctx.fillStyle = "rgba(0,0,0,0.1)"
     ctx.fill()
     ctx.fillRect(0, 0, innerWidth, innerHeight)
 
