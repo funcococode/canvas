@@ -8,15 +8,6 @@ addEventListener('mousemove', (e) => {
         ring.style.top = `${e.y}px`;
         ring.style.left = `${e.x}px`;
     }, 200)
-    if (e.target.tagName == "P") {
-        cursor.style.transform = "scale(2)";
-
-
-    } else {
-        cursor.style.transform = "scale(1)"
-
-
-    }
 })
 
 

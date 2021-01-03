@@ -43,7 +43,7 @@ button {
     width: 10px;
     height: 10px;
     top: 50%;
-    left: 50;
+    left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 50%;
     background: rgba(255, 255, 255, 1);
@@ -54,13 +54,13 @@ button {
 #ring {
     position: absolute;
     top: 50%;
-    left: 50;
+    left: 50%;
     transform: translate(-50%, -50%);
     width: 30px;
     height: 30px;
     border-radius: 50%;
     /* background-color: white; */
-    border: 2px solid white;
+    border: 2px solid #ffd56b;
     animation: ringAnim 3s 0.5s infinite;
     transform-origin: top left;
 }
@@ -68,13 +68,29 @@ button {
 p {
     display: inline;
     z-index: 10;
-    font-size: 2em;
+    font-size: 1.7em;
     position: absolute;
     top: 30px;
     left: 30px;
     color: rgba(255, 255, 255, 0.932);
     /* transform: translate(-50px, -50px); */
     letter-spacing: 5px;
+}
+
+.container {
+    position: absolute;
+    width: 100vw;
+    height: 80vh;
+    bottom: 0;
+    padding: 30px;
+    display: grid;
+    align-items: center;
+}
+
+.container>h2 {
+    color: rgb(31, 31, 31);
+    font-size: 14em;
+    letter-spacing: 3px;
 }
 
 @keyframes dotAnim {
