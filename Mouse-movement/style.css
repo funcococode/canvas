@@ -13,14 +13,6 @@ canvas {
     z-index: -1;
 }
 
-.blur {
-    z-index: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(255, 255, 255, 0.178);
-    backdrop-filter: blur(1px);
-}
-
 button {
     z-index: 1;
     position: fixed;
