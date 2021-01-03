@@ -4,7 +4,15 @@ canvas.width = innerWidth;
 canvas.height = innerHeight;
 
 let ballsArray = [];
-let numberOfBalls = 5;
+let numberOfBalls = 35;
+
+let colors = [
+    "#F1E8B8",
+    "#F9E784",
+    "#E58F65",
+    "#D05353",
+    "#191919"
+]
 
 
 class Ball {
@@ -12,11 +20,11 @@ class Ball {
         this.x = x;
         this.y = y;
 
-        this.dx = 2;
+        this.dx = (Math.random() > 0.5) ? 1 : -1;
         this.dy = 2;
 
-        this.gravity = 0.9
-        this.friction = 0.9
+        this.gravity = 0.01
+        this.friction = 0.92
 
         this.rad = rad;
         this.color = "red"
@@ -25,8 +33,8 @@ class Ball {
     draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.rad, 0, Math.PI * 2, false);
-        ctx.fillStyle = this.color;
-        ctx.fill()
+        ctx.strokeStyle = this.color;
+        ctx.stroke()
     }
 
     update() {
@@ -35,15 +43,22 @@ class Ball {
             // this.dy += 0.9
             this.dy = -this.dy * this.friction
         } else {
-            this.dy += this.gravity
+            this.dy += this.rad * 0.9 * this.gravity
         }
         this.y += this.dy;
 
         // Update X axis
         if (this.x > innerWidth - this.rad || this.x < 0 + this.rad) {
-            this.dx = -this.dx * this.friction
+            this.dx = -this.dx
         }
         this.x += this.dx;
+
+        // Update Radius
+        this.rad = this.rad * 0.99
+        console.log(this.rad);
+        if (this.rad < 1) {
+            this.rad = this.rad * 1.5
+        }
 
         this.draw()
     }
@@ -53,13 +68,25 @@ class Ball {
 let ball;
 
 function init() {
-    ball = new Ball(innerWidth / 2, innerHeight / 2, 40);
+
+    for (let i = 0; i < numberOfBalls; i++) {
+        let radius = Math.random() * 50 + 20
+        let x = Math.random() * (innerWidth - radius * 2) + 100;
+        let y = Math.random() * (innerHeight - 100) + 100;
+        ballsArray.push(new Ball(x, y, radius));
+    }
+
 }
 
 function animate() {
     requestAnimationFrame(animate)
-    ctx.clearRect(0, 0, innerWidth, innerHeight)
-    ball.update()
+    ctx.fillStyle = "rgba(222,222,222,0.1)"
+    ctx.fill()
+    ctx.fillRect(0, 0, innerWidth, innerHeight)
+
+    for (let i = 0; i < ballsArray.length; i++) {
+        ballsArray[i].update()
+    }
 }
 
 init()
