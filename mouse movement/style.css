@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
+* {
+    margin: 0;
+    font-family: "Staatliches";
+}
+
+html,
+body {
+    cursor: none;
+}
+
+canvas {
+    z-index: -1;
+}
+
+.blur {
+    z-index: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.178);
+    backdrop-filter: blur(1px);
+}
+
+button {
+    z-index: 1;
+    position: fixed;
+    right: 20px;
+    top: 20px;
+    padding: 10px 40px;
+    border: none;
+    /* border-radius: 3px; */
+    font-size: 20px;
+    cursor: pointer;
+    background: #ffd56b;
+    color: black;
+    /* mix-blend-mode: difference; */
+}
+
+#pointer {
+    position: absolute;
+    z-index: 100;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* mix-blend-mode: difference; */
+    pointer-events: none;
+}
+
+#dot {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    top: 50%;
+    left: 50;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 1);
+    transition: transform 0.25s ease-in-out, mix-blend-mode 0.23s ease-in-out;
+    animation: dotAnim 2s infinite;
+}
+
+#ring {
+    position: absolute;
+    top: 50%;
+    left: 50;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    /* background-color: white; */
+    border: 2px solid white;
+    animation: ringAnim 2s 0.5s infinite;
+    transform-origin: top left;
+}
+
+p {
+    display: inline;
+    z-index: 10;
+    font-size: 2em;
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    color: rgba(255, 255, 255, 0.932);
+    /* transform: translate(-50px, -50px); */
+    letter-spacing: 5px;
+}
+
+@keyframes dotAnim {
+    0% {
+        opacity: 1
+    }
+    50% {
+        opacity: 0
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes ringAnim {
+    0% {
+        transform: scale(1) translate(-50%, -50%);
+    }
+    50% {
+        transform: scale(0) translate(-50%, -50%);
+        opacity: 0
+    }
+    100% {
+        transform: scale(1) translate(-50%, -50%);
+        opacity: 1;
+    }
+}
