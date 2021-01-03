@@ -1,76 +1,66 @@
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
+canvas.width = innerWidth;
+canvas.height = innerHeight;
 
-let width = innerWidth;
-let height = innerHeight;
-
-canvas.width = width;
-canvas.height = height;
-
-let particleArray = [];
-let numberOfParticles = 50;
+let ballsArray = [];
+let numberOfBalls = 5;
 
 
-
-class Particle {
-    constructor(x, y, rad, color) {
+class Ball {
+    constructor(x, y, rad) {
         this.x = x;
         this.y = y;
+
+        this.dx = 2;
+        this.dy = 2;
+
+        this.gravity = 0.9
+        this.friction = 0.9
+
         this.rad = rad;
-        this.color = color;
-        this.weight = (Math.random() * 2) - 0.5;
+        this.color = "red"
     }
 
     draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.rad, 0, Math.PI * 2, false);
-        ctx.fillStyle = "blue";
-        ctx.fill();
+        ctx.fillStyle = this.color;
+        ctx.fill()
     }
 
     update() {
-
-        this.rad -= 0.05;
-
-        if (this.rad < 0) {
-            this.rad = (Math.random() * 10) + 2;
-            this.weight = (Math.random() * 2) - 0.5
+        // Update Y axis
+        if (this.y + this.rad > innerHeight || this.y < 0 + this.rad) {
+            // this.dy += 0.9
+            this.dy = -this.dy * this.friction
+        } else {
+            this.dy += this.gravity
         }
+        this.y += this.dy;
 
-        this.y += this.weight;
-        this.weight += 0.2;
-        if (this.y > height - this.rad) {
-            this.weight *= -1;
+        // Update X axis
+        if (this.x > innerWidth - this.rad || this.x < 0 + this.rad) {
+            this.dx = -this.dx * this.friction
         }
+        this.x += this.dx;
+
+        this.draw()
     }
+
 }
 
+let ball;
 
 function init() {
-    for (let i = 0; i < numberOfParticles; i++) {
-        let radius = Math.random() * 20;
-        let x = Math.random() * width;
-        let y = Math.random() * height;
-        particleArray.push(new Particle(x, y, radius, "Blue"))
-    }
+    ball = new Ball(innerWidth / 2, innerHeight / 2, 40);
 }
 
 function animate() {
-    ctx.fillStyle = "rgba(0,0,0,0.2)";
-    ctx.fill();
-    ctx.fillRect(0, 0, width, height);
-    for (let i = 0; i < numberOfParticles; i++) {
-        particleArray[i].update();
-        particleArray[i].draw();
-    }
-
-    window.requestAnimationFrame(animate)
+    requestAnimationFrame(animate)
+    ctx.clearRect(0, 0, innerWidth, innerHeight)
+    ball.update()
 }
 
-window.addEventListener("click", function(e) {
-    let part = new Particle(e.x, e.y, Math.random() * 10, "red");
-    part.draw()
-    part.update();
-})
 init()
 animate();
