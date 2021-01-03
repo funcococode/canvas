@@ -56,16 +56,16 @@ class Ball {
         this.x += this.dx;
 
         // Update Radius
-        // this.rad = this.rad * 0.99;
-        // // console.log(this.rad);
-        // if (this.rad < 1) {
-        //     this.rad = this.rad * 1.5;
-        // }
+        this.rad = this.rad * 0.99;
+        // console.log(this.rad);
+        if (this.rad < 1) {
+            this.rad = this.rad * 1.5;
+        }
 
         // INTERACTION WITH MOUSE
 
         if(mousex - this.x < 50 && mousex - this.x > -50 && mousey - this.y < 50 && mousey - this.y > -50){
-            this.rad += 1;
+            this.rad += 2;
         }else if(this.rad > this.safeRad){
             this.rad -=1
         }
@@ -89,8 +89,8 @@ function init() {
 
     for (let i = 0; i < numberOfBalls; i++) {
         let radius = Math.random() * 10 + 1;
-        let x = Math.floor(Math.random() * (innerWidth - radius * 2) + 100);
-        let y = Math.floor(Math.random() * (innerHeight - 100) + 100);
+        let x = Math.floor(Math.random() * (innerWidth - radius * 2));
+        let y = Math.floor(Math.random() * (innerHeight - 100));
         ballsArray.push(new Ball(x, y, radius));
     }
 
