@@ -14,9 +14,15 @@ let colors = [
 ];
 
 let mouseCoords = {
-    x:null,
-    y:null
+    x: null,
+    y: null
 };
+
+let gravityCoords = {
+    x: null,
+    y: null
+}
+
 class Ball {
     constructor(x, y, rad) {
         this.x = x;
@@ -27,10 +33,13 @@ class Ball {
 
         this.gravity = 0.01;
         this.friction = 0.97;
-
+        this.bGrav = 0.08;
         this.rad = rad;
         this.safeRad = this.rad;
-        this.color = colors[Math.floor(Math.random()*colors.length)];
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+
+        this.radian = 0;
+        this.velocity = Math.random() - 0.5;
     }
 
     draw() {
@@ -40,13 +49,34 @@ class Ball {
         ctx.fill();
     }
 
-    update(mousex,mousey) {
+
+    lookForBlackHole() {
+        if (gravityCoords.x && gravityCoords.y) {
+
+
+            this.radian += this.velocity / 20;
+            this.frequency = Math.random() * (10 - 5) + 5;
+            let bdx = gravityCoords.x - this.x;
+            let bdy = gravityCoords.y - this.y;
+            let bAngle = Math.atan2(bdy,bdx);
+            this.dx += Math.cos(bAngle) * this.bGrav;
+            this.dy += Math.sin(bAngle) * this.bGrav;
+
+            
+
+            ctx.beginPath();
+            ctx.arc(gravityCoords.x, gravityCoords.y, 2, 0, Math.PI * 2, false);
+            ctx.fillStyle = "white";
+            ctx.fill();
+        }
+    }
+
+
+    update(mousex, mousey) {
         // Update Y axis
         if (this.y + this.rad > innerHeight || this.y < 0 + this.rad) {
-            this.dy = -this.dy * this.friction;
-        } else {
-            this.dy += this.rad * 0.5 * this.gravity;
-        }
+            this.dy = -this.dy
+        } 
         this.y += this.dy;
 
         // Update X axis
@@ -64,24 +94,28 @@ class Ball {
 
         // INTERACTION WITH MOUSE
 
-        if(mousex - this.x < 50 && mousex - this.x > -50 && mousey - this.y < 50 && mousey - this.y > -50){
+        if (mousex - this.x < 50 && mousex - this.x > -50 && mousey - this.y < 50 && mousey - this.y > -50) {
             this.rad += 2;
-        }else if(this.rad > this.safeRad){
-            this.rad -=1
+        } else if (this.rad > this.safeRad) {
+            this.rad -= 1
         }
 
         this.draw();
+       
     }
 }
 
 let ball;
 
 // Update mouseCoords for mouse interaction
-window.addEventListener("mousemove",(e)=>{
-    mouseCoords = {
-        x:e.x,
-        y:e.y
-    }
+window.addEventListener("mousemove", (e) => mouseCoords = {
+    x: e.x,
+    y: e.y
+})
+
+window.addEventListener("click", e => gravityCoords = {
+    x: e.x,
+    y: e.y
 })
 
 
@@ -98,14 +132,14 @@ function init() {
 
 function animate() {
     // console.log(mouseCoords);
-    
     requestAnimationFrame(animate);
-    ctx.fillStyle = "rgba(0,0,0,0.1)";
+    ctx.fillStyle = "rgba(0,0,0,0.5)";
     ctx.fill();
     ctx.fillRect(0, 0, innerWidth, innerHeight);
 
     for (let i = 0; i < ballsArray.length; i++) {
-        ballsArray[i].update(mouseCoords.x,mouseCoords.y);
+        ballsArray[i].update(mouseCoords.x, mouseCoords.y);
+        ballsArray[i].lookForBlackHole()
     }
 }
 
